@@ -54,7 +54,7 @@
                 android:textSize="16dp"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="Button 1"
                 android:id="@+id/button1"
@@ -63,7 +63,7 @@
                 android:clickable="true" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="Button 2"
                 android:id="@+id/button2"
@@ -71,7 +71,7 @@
                 android:layout_centerHorizontal="true" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="Button 3"
                 android:id="@+id/button3"
@@ -79,21 +79,32 @@
                 android:layout_centerHorizontal="true" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="Button 4"
                 android:id="@+id/button4"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
 
-            <Button
+            <!--Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quit"
                 android:id="@+id/buttonQuit"
                 android:layout_marginTop="20dp"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true" /-->
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/scoreBoard"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="0 / 1"
+                android:textSize="24dp"/>
+
 
         </LinearLayout>
 

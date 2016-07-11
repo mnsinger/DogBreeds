@@ -28,14 +28,13 @@ import java.util.Random;
 public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
     private final String TAG = "QuizActivity";
-    int correctIndex = 0, falseIndex1 = 0, falseIndex2 = 0, falseIndex3 = 0;
+    int correctIndex = 0, falseIndex1 = 0, falseIndex2 = 0, falseIndex3 = 0, scoreBoard = 0;
     Button button1, button2, button3, button4;
-    //, buttonQuit;
     ImageView image1;
-    TextView text2;
+    TextView text2, scoreBoardTextView;
     Random rand;
     public static Activity activity;
-    ArrayList<DogBreed> randomBreeds = new ArrayList<DogBreed>();
+    ArrayList<Integer> usedIndexes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +64,17 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
         button3 = (Button) findViewById(R.id.button3);
         button4 = (Button) findViewById(R.id.button4);
         //buttonQuit = (Button) findViewById(R.id.buttonQuit);
+        scoreBoardTextView = (TextView) findViewById(R.id.scoreBoard);
+        scoreBoardTextView.setText("0 / 0");
 
         image1 = (ImageView) findViewById(R.id.imageViewDogBreed);
         text2 = (TextView) findViewById(R.id.detailtext2);
 
         rand = new Random();
 
-        randomBreeds = dogBreedAdapter.origBreeds;
+        //randomBreeds = dogBreedAdapter.origBreeds;
 
-        goQuiz(randomBreeds);
+        goQuiz(dogBreedAdapter.origBreeds);
     }
 
     @Override
@@ -88,20 +89,21 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
         int intID = view.getId();
         final Button button = (Button) findViewById(intID);
         String message = button.getText().toString();
-        Log.v(TAG, "button message: " + message + ", adapter: " + randomBreeds.get(correctIndex).getName());
+        //Log.v(TAG, "button message: " + message + ", adapter: " + randomBreeds.get(correctIndex).getName());
 
         if (message.equals("Quit")) {
             QuizActivity.this.finish();
         }
 
         final AnimationDrawable drawable = new AnimationDrawable();
+        final AnimationDrawable drawable1 = new AnimationDrawable();
         final Handler handler = new Handler();
         final Drawable d = button.getBackground();
 
         Runnable r2;
-        if (message.equals(randomBreeds.get(correctIndex).getName())) {
+        if (message.equals(dogBreedAdapter.origBreeds.get(correctIndex).getName())) {
             //Toast.makeText(QuizActivity.this, "CORRECT", Toast.LENGTH_LONG).show();
-
+            scoreBoard++;
             drawable.addFrame(new ColorDrawable(Color.GREEN), 400);
 
             r2 = new Runnable() {
@@ -109,26 +111,40 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
                 public void run() {
                     //button.setBackgroundResource(android.R.drawable.btn_default);
                     button.setBackground(d);
-                    goQuiz(randomBreeds);
+                    goQuiz(dogBreedAdapter.origBreeds);
                 }
             };
 
         }
         else {
             drawable.addFrame(new ColorDrawable(Color.RED), 400);
+            drawable1.addFrame(new ColorDrawable(Color.GREEN), 400);
+
+            if (button1.getText().toString().equals(dogBreedAdapter.origBreeds.get(correctIndex).getName()))
+                button1.setBackground(drawable1);
+            else if (button2.getText().toString().equals(dogBreedAdapter.origBreeds.get(correctIndex).getName()))
+                button2.setBackground(drawable1);
+            else if (button3.getText().toString().equals(dogBreedAdapter.origBreeds.get(correctIndex).getName()))
+                button3.setBackground(drawable1);
+            else if (button4.getText().toString().equals(dogBreedAdapter.origBreeds.get(correctIndex).getName()))
+                button4.setBackground(drawable1);
 
             r2 = new Runnable() {
                 @Override
                 public void run() {
-                    button.setBackground(d);
+                    button1.setBackground(d);
+                    button2.setBackground(d);
+                    button3.setBackground(d);
+                    button4.setBackground(d);
                     //button.setBackgroundResource(android.R.drawable.btn_default);
                     //button.setBackground(buttonQuit.getBackground());
+                    goQuiz(dogBreedAdapter.origBreeds);
                 }
             };
 
             //Toast.makeText(QuizActivity.this, "Sorry, try again.", Toast.LENGTH_LONG).show();
         }
-
+        scoreBoardTextView.setText(scoreBoard + "/" + usedIndexes.size());
         drawable.setOneShot(false);
         button.setBackground(drawable);
 
@@ -141,7 +157,7 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
         handler.post(r1);
 
-        handler.postDelayed(r2, 500);
+        handler.postDelayed(r2, 2000);
 
     }
 
@@ -154,8 +170,9 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
             falseIndex3 = rand.nextInt(allBreeds.size());
             Log.v(TAG, correctIndex + " " + falseIndex1 + " " + falseIndex2 + " " + falseIndex3);
             Log.v(TAG, "areDups: " + areDups(correctIndex, falseIndex1, falseIndex2, falseIndex3));
-        } while (areDups(correctIndex, falseIndex1, falseIndex2, falseIndex3) || noImage(allBreeds, correctIndex));
+        } while (areDups(correctIndex, falseIndex1, falseIndex2, falseIndex3) || noImage(allBreeds, correctIndex) || usedIndex(correctIndex));
 
+        usedIndexes.add(correctIndex);
         image1.setImageBitmap(allBreeds.get(correctIndex).getBitmapLarge());
         //text2.setText(allBreeds.get(correctIndex).getName());
 
@@ -188,6 +205,12 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
     public boolean noImage(ArrayList<DogBreed> allBreeds, int i1) {
         if (allBreeds.get(i1).getId() == -1)
+            return true;
+        return false;
+    }
+
+    public boolean usedIndex(int i1) {
+        if (usedIndexes.contains(i1))
             return true;
         return false;
     }
