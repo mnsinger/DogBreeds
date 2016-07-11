@@ -48,10 +48,8 @@ public class DogBreedDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        //textView = (TextView) findViewById(R.id.detailtext1);
         breedName = intent.getStringExtra("breed");
         imageView = (ImageView) findViewById(R.id.imageView);
-        //textView.setText(intent.getStringExtra("breed"));
         flagView = (ImageView) findViewById(R.id.flagView);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -69,7 +67,6 @@ public class DogBreedDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
         int resId = intent.getIntExtra("flagResId", -1);
         if (resId != -1) {
@@ -95,20 +92,6 @@ public class DogBreedDetailActivity extends AppCompatActivity {
 
     }
 
-    // Alano Espanol
-    // Elo (wrong data)
-    // Epagneul Bleu de Picardie
-    // Grand Anglo... (3)
-    // Hamiltonstovare
-    // Kromfohrlander
-    // Kuri
-    // Lowchen
-    // Magyar Agar
-    // Munsterlander, Large
-    // Munsterlander, Small
-    // McNab (wrong data)
-    // Podenco Canario
-    // Prazsky Krysarik
     private String getBreedInfo(String breedName) throws XmlPullParserException, IOException {
         Log.v(TAG, "ABOUT TO START getBreedInfo!!!");
         try {
