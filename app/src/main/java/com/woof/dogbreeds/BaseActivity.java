@@ -116,7 +116,7 @@ public class BaseActivity extends AppCompatActivity {
         SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
 
         //final SearchView
-        searchView.setQueryHint("Search breed...");
+        searchView.setQueryHint("Search breed or country...");
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         if (mLayoutResName.equals("res/layout/activity_main.xml")) {

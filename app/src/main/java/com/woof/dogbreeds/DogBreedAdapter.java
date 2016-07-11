@@ -147,7 +147,7 @@ public class DogBreedAdapter extends BaseAdapter implements Filterable {
         origBreeds.add(new DogBreed(context, "Aidi", "Morocco"));
         origBreeds.add(new DogBreed(context, "Airedale Terrier", "United Kingdom (England)"));
         origBreeds.add(new DogBreed(context, "Akbash", "Turkey"));
-        origBreeds.add(new DogBreed(context, "Akita Inu", "Japan"));
+/*        origBreeds.add(new DogBreed(context, "Akita Inu", "Japan"));
         origBreeds.add(new DogBreed(context, "Alano Español", "Spain"));
         origBreeds.add(new DogBreed(context, "Alaskan Klee Kai", "United States"));
         origBreeds.add(new DogBreed(context, "Alaskan Malamute", "United States"));
@@ -650,7 +650,7 @@ public class DogBreedAdapter extends BaseAdapter implements Filterable {
         origBreeds.add(new DogBreed(context, "Wirehaired Pointing Griffon", "Netherlands, France"));
         origBreeds.add(new DogBreed(context, "Wirehaired Vizsla", "Hungary"));
         origBreeds.add(new DogBreed(context, "Xiasi Dog", "China"));
-        origBreeds.add(new DogBreed(context, "Yorkshire Terrier", "United Kingdom (England)"));
+        origBreeds.add(new DogBreed(context, "Yorkshire Terrier", "United Kingdom (England)"));*/
 
         filtBreeds = origBreeds;
         Log.v(TAG, "filtBreeds: " + filtBreeds.toString());
