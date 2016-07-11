@@ -8,13 +8,16 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Xml;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -45,11 +48,28 @@ public class DogBreedDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        textView = (TextView) findViewById(R.id.detailtext1);
+        //textView = (TextView) findViewById(R.id.detailtext1);
         breedName = intent.getStringExtra("breed");
         imageView = (ImageView) findViewById(R.id.imageView);
-        textView.setText(intent.getStringExtra("breed"));
+        //textView.setText(intent.getStringExtra("breed"));
         flagView = (ImageView) findViewById(R.id.flagView);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitle(breedName);
+        setSupportActionBar(myToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        myToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+
+        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
         int resId = intent.getIntExtra("flagResId", -1);
         if (resId != -1) {
