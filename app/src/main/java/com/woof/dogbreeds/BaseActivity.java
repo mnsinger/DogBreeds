@@ -31,7 +31,7 @@ public class BaseActivity extends AppCompatActivity {
     public static DogBreedAdapter dogBreedAdapter;
     String[] mSideMenuArray;
     public SearchView searchView;
-    String mLayoutResName;
+    String mLayoutResName = "";
     public static String currentPage = "Home";
 
     protected void onCreateDrawer(final int layoutResID) {

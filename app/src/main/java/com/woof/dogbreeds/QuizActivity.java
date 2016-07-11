@@ -1,6 +1,7 @@
 package com.woof.dogbreeds;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
@@ -8,6 +9,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,12 +34,28 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
     TextView text2;
     Random rand;
     public static Activity activity;
-    ArrayList<DogBreed> randomBreeds;
+    ArrayList<DogBreed> randomBreeds = new ArrayList<DogBreed>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.onCreateDrawer(R.layout.quiz);
+
+        setContentView(R.layout.quiz);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitle("Quiz");
+        setSupportActionBar(myToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        myToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+
+        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         activity = this;
 
@@ -51,16 +70,16 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
         rand = new Random();
 
-        //randomBreeds = dogBreedAdapter.getRandomBreeds();
         randomBreeds = dogBreedAdapter.origBreeds;
+
         goQuiz(randomBreeds);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.v(TAG, "currentPage = " + currentPage);
-        mDrawerList.setItemChecked(2, true);
+        //Log.v(TAG, "currentPage = " + currentPage);
+        //mDrawerList.setItemChecked(2, true);
     }
 
     @Override
