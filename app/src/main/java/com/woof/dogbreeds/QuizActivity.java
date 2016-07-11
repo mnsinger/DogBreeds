@@ -29,7 +29,8 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
     private final String TAG = "QuizActivity";
     int correctIndex = 0, falseIndex1 = 0, falseIndex2 = 0, falseIndex3 = 0;
-    Button button1, button2, button3, button4, buttonQuit;
+    Button button1, button2, button3, button4;
+    //, buttonQuit;
     ImageView image1;
     TextView text2;
     Random rand;
@@ -63,7 +64,7 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
         button4 = (Button) findViewById(R.id.button4);
-        buttonQuit = (Button) findViewById(R.id.buttonQuit);
+        //buttonQuit = (Button) findViewById(R.id.buttonQuit);
 
         image1 = (ImageView) findViewById(R.id.imageViewDogBreed);
         text2 = (TextView) findViewById(R.id.detailtext2);
@@ -174,7 +175,7 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
         button4.setOnClickListener(this);
-        buttonQuit.setOnClickListener(this);
+        //buttonQuit.setOnClickListener(this);
 
     }
 
