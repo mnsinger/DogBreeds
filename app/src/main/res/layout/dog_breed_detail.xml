@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <!--LinearLayout
+        android:id="@+id/buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Custom Button1"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Custom Button2"/>
+    </LinearLayout-->
+
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_alignParentTop="true">
+        <LinearLayout
+            android:id="@+id/top1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_alignParentTop="true">
+            <TextView
+                android:layout_marginTop="2dp"
+                android:id="@+id/detailtext1"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textStyle="bold"
+                android:text="Andalusian Hound"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="24dp"/>
+            <ImageView
+                android:id="@+id/flagView"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="2dp"
+                android:layout_width="32dp"
+                android:layout_height="17dp"
+                android:src="@drawable/unitedstates"
+                android:layout_marginRight="5dp" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_marginTop="2dp"
+            android:layout_width="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="200dp"
+            android:src="@drawable/unitedstates" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/top">
+        <!--Scrollable content here-->
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/detailtext2"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="test text"
+                android:textSize="16dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
