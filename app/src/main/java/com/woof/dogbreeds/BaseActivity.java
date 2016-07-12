@@ -30,9 +30,12 @@ public class BaseActivity extends AppCompatActivity {
     ListView listView, mDrawerList;
     public static DogBreedAdapter dogBreedAdapter;
     String[] mSideMenuArray;
-    public SearchView searchView;
+    public static SearchView searchView;
     String mLayoutResName = "";
     public static String currentPage = "Home";
+    ArrayList<Integer> quizCorrectIndexes = new ArrayList<>();
+    ArrayList<Integer> quizInCorrectIndexes = new ArrayList<>();
+
 
     protected void onCreateDrawer(final int layoutResID) {
         setContentView(layoutResID);

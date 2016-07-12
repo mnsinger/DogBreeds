@@ -7,6 +7,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +28,7 @@ import java.util.HashMap;
 public class DogBreedAdapter extends BaseAdapter implements Filterable {
 
     private final String TAG = "DogBreedAdapter";
+    ArrayList<DogBreed> quizBreeds =  new ArrayList<DogBreed>();
     ArrayList<DogBreed> filtBreeds =  new ArrayList<DogBreed>();
     ArrayList<DogBreed> origBreeds = new ArrayList<DogBreed>();
     HashMap<Integer, Bitmap> countryFlags = new HashMap<Integer, Bitmap>();
@@ -41,6 +45,18 @@ public class DogBreedAdapter extends BaseAdapter implements Filterable {
         mActivity=mainActivity;
         mSearchView=searchView;
         inflater = ( LayoutInflater )context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public void setQuizResults(ArrayList<Integer> quizCorrectIndexes, ArrayList<Integer> quizInCorrectIndexes) {
+        quizBreeds.clear();
+        quizBreeds.add(new DogBreed(context, "CORRECT RESULTS", ""));
+        for (int c = 0; c < quizCorrectIndexes.size(); c++) {
+            quizBreeds.add(origBreeds.get(quizCorrectIndexes.get(c)));
+        }
+        quizBreeds.add(new DogBreed(context, "INCORRECT RESULTS", ""));
+        for (int c = 0; c < quizInCorrectIndexes.size(); c++) {
+            quizBreeds.add(origBreeds.get(quizInCorrectIndexes.get(c)));
+        }
     }
 
     public void init() {
@@ -95,42 +111,53 @@ public class DogBreedAdapter extends BaseAdapter implements Filterable {
         else
             holder.flag.setImageResource(R.drawable.q);
 
-        holder.flag.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                //mFilter.publishResults("", mFilter.performFiltering(filtBreeds.get(position).getCountry().split(",")[0]));
-                String country=filtBreeds.get(position).getCountry().split(",")[0];
-                mSearchView.setQuery(country, true);
-                mSearchView.setFocusable(true);
-                mSearchView.setIconified(false);
-                mSearchView.requestFocusFromTouch();
+        if (filtBreeds.get(position).getName().equals("CORRECT RESULTS")) {
+            final ColorDrawable drawable = new ColorDrawable();
+            drawable.setColor(Color.GREEN);
+            holder.img.setImageResource(android.R.color.transparent);
+            holder.flag.setImageResource(android.R.color.transparent);
+            vi.setBackground(drawable);
+        }
+        else if (filtBreeds.get(position).getName().equals("INCORRECT RESULTS")) {
+            final ColorDrawable drawable = new ColorDrawable();
+            drawable.setColor(Color.RED);
+            holder.img.setImageResource(android.R.color.transparent);
+            holder.flag.setImageResource(android.R.color.transparent);
+            vi.setBackground(drawable);
+        }
+        else {
+            //if (vi.getBackground().equals(Color.RED) || vi.getBackground().equals(Color.GREEN)) {
+                final ColorDrawable drawable = new ColorDrawable();
+                vi.setBackground(drawable);
+            //}
+            holder.flag.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    //mFilter.publishResults("", mFilter.performFiltering(filtBreeds.get(position).getCountry().split(",")[0]));
+                    String country = filtBreeds.get(position).getCountry().split(",")[0];
+                    mSearchView.setQuery(country, true);
+                    mSearchView.setFocusable(true);
+                    mSearchView.setIconified(false);
+                    mSearchView.requestFocusFromTouch();
 
-            }
-        });
+                }
+            });
 
-        vi.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                //Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
-                //Intent intent = new Intent(context, ImageActivity.class);
-                //intent.putExtra("filename", result[position]);
+            vi.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
 
-                //
-                //
-                // SHOULD THIS BE startActivityForResult ???????
-                //
-                //
+                    Intent mIntent = new Intent(context, DogBreedDetailActivity.class);
+                    mIntent.putExtra("breed", filtBreeds.get(position).getName().replaceAll("[\\.\\d+]", "").replaceAll("^\\s+", ""));
+                    mIntent.putExtra("breedImage", filtBreeds.get(position).getBitmapLarge());
+                    mIntent.putExtra("flagResId", filtBreeds.get(position).getFlagResId());
+                    context.startActivity(mIntent);
 
-                Intent mIntent = new Intent(context, DogBreedDetailActivity.class);
-                mIntent.putExtra("breed", filtBreeds.get(position).getName().replaceAll("[\\.\\d+]", "").replaceAll("^\\s+", ""));
-                mIntent.putExtra("breedImage", filtBreeds.get(position).getBitmapLarge());
-                mIntent.putExtra("flagResId", filtBreeds.get(position).getFlagResId());
-                context.startActivity(mIntent);
-
-            }
-        });
+                }
+            });
+        }
 
         notifyDataSetChanged();
 
@@ -682,6 +709,7 @@ public class DogBreedAdapter extends BaseAdapter implements Filterable {
             ArrayList<DogBreed> nBreeds;
 
             if (constraint.toString().equals("top breeds")) {
+
                 nBreeds = new ArrayList<DogBreed>(20);
 
                 nBreeds.add(new DogBreed(context, " 1. Labrador Retriever", "Canada, United Kingdom (England)"));
@@ -704,6 +732,12 @@ public class DogBreedAdapter extends BaseAdapter implements Filterable {
                 nBreeds.add(new DogBreed(context, "18. Cavalier King Charles Spaniel", "United Kingdom (England)"));
                 nBreeds.add(new DogBreed(context, "19. Shih Tzu", "China"));
                 nBreeds.add(new DogBreed(context, "20. Welsh Corgi, Pembroke", "United Kingdom (Wales)"));
+            }
+            else if (constraint.toString().equals("quiz results")) {
+                nBreeds = new ArrayList<DogBreed>(27);
+
+                nBreeds = quizBreeds;
+
             }
             else {
                 nBreeds = new ArrayList<DogBreed>(origBreeds.size());

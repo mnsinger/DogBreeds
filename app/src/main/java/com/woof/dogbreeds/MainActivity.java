@@ -29,20 +29,22 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.onCreateDrawer(R.layout.activity_main);
-/*
+
         Intent intent = getIntent();
         String queryValue = intent.getStringExtra("searchViewQuery");
 
         Log.v(TAG, "queryValue: " + queryValue);
 
-        if (queryValue != null && queryValue.toLowerCase().equals("top breeds")) {
-            mDrawerList.setItemChecked(1, true);
-            //searchView.setQuery("Top Breeds", true);
+        if (queryValue != null && queryValue.equals("Quiz Results")) {
+            mDrawerList.setItemChecked(2, true);
+            searchView.setQuery("Quiz Results", true);
+            Log.v(TAG, "setting search query");
         }
         else {
             mDrawerList.setItemChecked(0, true);
         }
-*/
+
+
     }
 
     @Override
@@ -54,6 +56,9 @@ public class MainActivity extends BaseActivity {
         if (currentPage.equals("Top Breeds")) {
             searchView.setQuery("Top Breeds", true);
             mDrawerList.setItemChecked(1, true);
+        }
+        else if (currentPage.equals("Quiz")) {
+
         }
         // just started app
         else {

@@ -75,6 +75,9 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
         //randomBreeds = dogBreedAdapter.origBreeds;
 
+        quizCorrectIndexes.clear();
+        quizInCorrectIndexes.clear();
+
         goQuiz(dogBreedAdapter.origBreeds);
     }
 
@@ -104,6 +107,7 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
         Runnable r2;
         if (message.equals(dogBreedAdapter.origBreeds.get(correctIndex).getName())) {
+            quizCorrectIndexes.add(correctIndex);
             toast = Toast.makeText(QuizActivity.this, "CORRECT", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
@@ -121,6 +125,7 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
         }
         else {
+            quizInCorrectIndexes.add(correctIndex);
             toast = Toast.makeText(QuizActivity.this, "Sorry, incorrect.", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
@@ -171,37 +176,45 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
     public void goQuiz(ArrayList<DogBreed> allBreeds) {
 
-        do {
-            correctIndex = rand.nextInt(allBreeds.size());
-            falseIndex1 = rand.nextInt(allBreeds.size());
-            falseIndex2 = rand.nextInt(allBreeds.size());
-            falseIndex3 = rand.nextInt(allBreeds.size());
-            Log.v(TAG, correctIndex + " " + falseIndex1 + " " + falseIndex2 + " " + falseIndex3);
-            Log.v(TAG, "areDups: " + areDups(correctIndex, falseIndex1, falseIndex2, falseIndex3));
-        } while (areDups(correctIndex, falseIndex1, falseIndex2, falseIndex3) || noImage(allBreeds, correctIndex) || usedIndex(correctIndex));
+        if (usedIndexes.size() == 25) {
+            searchView.setQuery("Quiz Results", true);
+            dogBreedAdapter.setQuizResults(quizCorrectIndexes, quizInCorrectIndexes);
+            finish();
+        }
+        else {
 
-        usedIndexes.add(correctIndex);
-        image1.setImageBitmap(allBreeds.get(correctIndex).getBitmapLarge());
-        text2.setText(usedIndexes.size() + " of 25");
+            do {
+                correctIndex = rand.nextInt(allBreeds.size());
+                falseIndex1 = rand.nextInt(allBreeds.size());
+                falseIndex2 = rand.nextInt(allBreeds.size());
+                falseIndex3 = rand.nextInt(allBreeds.size());
+                Log.v(TAG, correctIndex + " " + falseIndex1 + " " + falseIndex2 + " " + falseIndex3);
+                Log.v(TAG, "areDups: " + areDups(correctIndex, falseIndex1, falseIndex2, falseIndex3));
+            }
+            while (areDups(correctIndex, falseIndex1, falseIndex2, falseIndex3) || noImage(allBreeds, correctIndex) || usedIndex(correctIndex));
 
-        List<Integer> dataList = new ArrayList<Integer>();
-        dataList.add(correctIndex);
-        dataList.add(falseIndex1);
-        dataList.add(falseIndex2);
-        dataList.add(falseIndex3);
-        Collections.shuffle(dataList);
+            usedIndexes.add(correctIndex);
+            image1.setImageBitmap(allBreeds.get(correctIndex).getBitmapLarge());
+            text2.setText(usedIndexes.size() + " of 25");
 
-        button1.setText(allBreeds.get(dataList.get(0)).getName());
-        button2.setText(allBreeds.get(dataList.get(1)).getName());
-        button3.setText(allBreeds.get(dataList.get(2)).getName());
-        button4.setText(allBreeds.get(dataList.get(3)).getName());
+            List<Integer> dataList = new ArrayList<Integer>();
+            dataList.add(correctIndex);
+            dataList.add(falseIndex1);
+            dataList.add(falseIndex2);
+            dataList.add(falseIndex3);
+            Collections.shuffle(dataList);
 
-        button1.setOnClickListener(this);
-        button2.setOnClickListener(this);
-        button3.setOnClickListener(this);
-        button4.setOnClickListener(this);
-        //buttonQuit.setOnClickListener(this);
+            button1.setText(allBreeds.get(dataList.get(0)).getName());
+            button2.setText(allBreeds.get(dataList.get(1)).getName());
+            button3.setText(allBreeds.get(dataList.get(2)).getName());
+            button4.setText(allBreeds.get(dataList.get(3)).getName());
 
+            button1.setOnClickListener(this);
+            button2.setOnClickListener(this);
+            button3.setOnClickListener(this);
+            button4.setOnClickListener(this);
+            //buttonQuit.setOnClickListener(this);
+        }
     }
 
     public boolean areDups(int i1, int i2, int i3, int i4) {
