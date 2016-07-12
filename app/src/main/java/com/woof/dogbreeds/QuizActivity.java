@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -65,7 +66,7 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
         button4 = (Button) findViewById(R.id.button4);
         //buttonQuit = (Button) findViewById(R.id.buttonQuit);
         scoreBoardTextView = (TextView) findViewById(R.id.scoreBoard);
-        scoreBoardTextView.setText("0 / 0");
+        scoreBoardTextView.setText("0");
 
         image1 = (ImageView) findViewById(R.id.imageViewDogBreed);
         text2 = (TextView) findViewById(R.id.detailtext2);
@@ -89,6 +90,7 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
         int intID = view.getId();
         final Button button = (Button) findViewById(intID);
         String message = button.getText().toString();
+        Toast toast;
         //Log.v(TAG, "button message: " + message + ", adapter: " + randomBreeds.get(correctIndex).getName());
 
         if (message.equals("Quit")) {
@@ -102,7 +104,9 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
         Runnable r2;
         if (message.equals(dogBreedAdapter.origBreeds.get(correctIndex).getName())) {
-            //Toast.makeText(QuizActivity.this, "CORRECT", Toast.LENGTH_LONG).show();
+            toast = Toast.makeText(QuizActivity.this, "CORRECT", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+            toast.show();
             scoreBoard++;
             drawable.addFrame(new ColorDrawable(Color.GREEN), 400);
 
@@ -117,8 +121,12 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
         }
         else {
+            toast = Toast.makeText(QuizActivity.this, "Sorry, incorrect.", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+            toast.show();
             drawable.addFrame(new ColorDrawable(Color.RED), 400);
-            drawable1.addFrame(new ColorDrawable(Color.GREEN), 400);
+            drawable1.addFrame(new ColorDrawable(Color.GREEN), 200);
+            drawable1.addFrame(new ColorDrawable(Color.WHITE), 200);
 
             if (button1.getText().toString().equals(dogBreedAdapter.origBreeds.get(correctIndex).getName()))
                 button1.setBackground(drawable1);
@@ -142,9 +150,8 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
                 }
             };
 
-            //Toast.makeText(QuizActivity.this, "Sorry, try again.", Toast.LENGTH_LONG).show();
         }
-        scoreBoardTextView.setText(scoreBoard + "/" + usedIndexes.size());
+        scoreBoardTextView.setText(String.valueOf(scoreBoard));
         drawable.setOneShot(false);
         button.setBackground(drawable);
 
@@ -152,6 +159,7 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void run() {
                 drawable.start();
+                drawable1.start();
             }
         };
 
@@ -174,7 +182,7 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
         usedIndexes.add(correctIndex);
         image1.setImageBitmap(allBreeds.get(correctIndex).getBitmapLarge());
-        //text2.setText(allBreeds.get(correctIndex).getName());
+        text2.setText(usedIndexes.size() + " of 25");
 
         List<Integer> dataList = new ArrayList<Integer>();
         dataList.add(correctIndex);
