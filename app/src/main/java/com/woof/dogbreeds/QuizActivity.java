@@ -90,6 +90,7 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        disableButtons();
         int intID = view.getId();
         final Button button = (Button) findViewById(intID);
         String message = button.getText().toString();
@@ -120,6 +121,7 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
                     //button.setBackgroundResource(android.R.drawable.btn_default);
                     button.setBackground(d);
                     goQuiz(dogBreedAdapter.origBreeds);
+                    enableButtons();
                 }
             };
 
@@ -149,9 +151,8 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
                     button2.setBackground(d);
                     button3.setBackground(d);
                     button4.setBackground(d);
-                    //button.setBackgroundResource(android.R.drawable.btn_default);
-                    //button.setBackground(buttonQuit.getBackground());
                     goQuiz(dogBreedAdapter.origBreeds);
+                    enableButtons();
                 }
             };
 
@@ -170,7 +171,7 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
 
         handler.post(r1);
 
-        handler.postDelayed(r2, 2000);
+        handler.postDelayed(r2, 1500);
 
     }
 
@@ -234,6 +235,20 @@ public class QuizActivity extends BaseActivity implements View.OnClickListener {
         if (usedIndexes.contains(i1))
             return true;
         return false;
+    }
+
+    public void disableButtons() {
+        button1.setEnabled(false);
+        button2.setEnabled(false);
+        button3.setEnabled(false);
+        button4.setEnabled(false);
+    }
+
+    public void enableButtons() {
+        button1.setEnabled(true);
+        button2.setEnabled(true);
+        button3.setEnabled(true);
+        button4.setEnabled(true);
     }
 
 }

@@ -51,11 +51,13 @@ public class DogBreedAdapter extends BaseAdapter implements Filterable {
         quizBreeds.clear();
         quizBreeds.add(new DogBreed(context, "CORRECT RESULTS", ""));
         for (int c = 0; c < quizCorrectIndexes.size(); c++) {
-            quizBreeds.add(origBreeds.get(quizCorrectIndexes.get(c)));
+            if (!quizBreeds.contains(origBreeds.get(quizCorrectIndexes.get(c))))
+                quizBreeds.add(origBreeds.get(quizCorrectIndexes.get(c)));
         }
         quizBreeds.add(new DogBreed(context, "INCORRECT RESULTS", ""));
         for (int c = 0; c < quizInCorrectIndexes.size(); c++) {
-            quizBreeds.add(origBreeds.get(quizInCorrectIndexes.get(c)));
+            if (!quizBreeds.contains(origBreeds.get(quizInCorrectIndexes.get(c))))
+                quizBreeds.add(origBreeds.get(quizInCorrectIndexes.get(c)));
         }
     }
 
