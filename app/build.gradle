@@ -8,8 +8,8 @@ android {
         applicationId "com.woof.dogbreeds"
         minSdkVersion 18
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 1.1
+        versionName "1.1"
     }
     buildTypes {
         release {
