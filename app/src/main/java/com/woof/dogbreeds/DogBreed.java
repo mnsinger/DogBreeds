@@ -225,8 +225,7 @@ public class DogBreed {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
+
     }
-
-
 
 }
